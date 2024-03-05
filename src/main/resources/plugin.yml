@@ -1,0 +1,9 @@
+name: MonthlyRewards
+version: '${project.version}'
+main: com.ashkiano.monthlyrewards.MonthlyRewards
+api-version: '1.16'
+authors: [ AshKiano ]
+commands:
+  monthly:
+    description: Take your monthly reward
+    usage: /<command>
