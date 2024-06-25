@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import java.util.Calendar;
+import java.util.List;
 
 public class MonthlyCommandExecutor implements CommandExecutor {
     private final MonthlyRewards plugin;
@@ -33,9 +34,12 @@ public class MonthlyCommandExecutor implements CommandExecutor {
             return true;
         }
 
-        String rewardCommand = plugin.getConfig().getString("reward-command").replace("%player%", playerName);
-        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), rewardCommand);
-        player.sendMessage("You have claimed your monthly reward.");
+        List<String> rewardCommands = plugin.getConfig().getStringList("reward-commands");
+        for (String rewardCommand : rewardCommands) {
+            rewardCommand = rewardCommand.replace("%player%", playerName);
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), rewardCommand);
+        }
+        player.sendMessage("You have claimed your monthly rewards.");
 
         plugin.getConfig().set("rewards." + playerName + ".month", currentMonth);
         plugin.getConfig().set("rewards." + playerName + ".year", currentYear);
